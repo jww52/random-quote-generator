@@ -50,11 +50,12 @@ let usedQuoteArr = [],
 //Quotes change automatically after certain amount of time passes
 function qt() {
           let int = setInterval(printQuote, 5000);
-          console.log('timer running');
+          console.log('timer running', int);
         }
 // stop timer at set interval -- absolutely not working.
-function killqt(){
-  clearInterval(int, 25000);
+function killqt(interval){
+  console.log(interval)
+  killInt = setTimeout(clearInterval(interval), 25000);
   console.log('stopping in:');
     var i = 25;
     function startTimer() {
@@ -121,24 +122,33 @@ function getRandomQuote(){
 //Function prints the quote to the page using the template supplied in the project instructions
 function printQuote() {
       let selectedQuote = getRandomQuote();
+
       colorChange();
           document.getElementsByTagName("P")[0].innerHTML = selectedQuote.quote;
           document.getElementById("source").innerHTML = selectedQuote.source;
           if(selectedQuote.citation) {
-              document.getElementById("citation").innerHTML = selectedQuote.citation;
+            console.log(selectedQuote.citation);
+              document.querySelector(".citation").style.visibility = "visible";
+              document.querySelector(".citation").innerHTML = selectedQuote.citation;
             } else {
-              document.getElementById("citation").style.visibility = 'hidden'
-            }
-          if (selectedQuote.year) {
-              document.getElementById("year").innerHTML = selectedQuote.year;
-            } else {
-              document.getElementById("year").style.visibility = 'hidden'
+              document.querySelector(".citation").style.visibility = "hidden";
+              document.querySelector(".citation").innerHTML = "";
             }
 
-      }
+            // } else {
+            //   document.getElementById("citation").style.visibility = 'hidden'
+            // }
+          if (selectedQuote.year) {
+              document.querySelector(".year").style.visibility = "visible";
+              document.querySelector(".year").innerHTML = selectedQuote.year;
+            } else {
+              document.querySelector(".year").style.visibility = "hidden";
+              document.querySelector(".year").innerHTML = "";
+            }
+        }
 
 // event listener to respond to "Show another quote" button clicks
 // when user clicks anywhere on the button, the "printQuote" function is called
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
-// qt();
-// killqt(int);
+qt();
+killqt(int);
